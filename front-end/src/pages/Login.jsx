@@ -65,6 +65,13 @@ export default function Login() {
       // Envia email e password para o back-end para fazer autenticação
       const response = await myfetch.post('/users/login', loginData)
 
+      /*
+      Vulnerabilidade: API2:2023 - Falha de autenticação e API8:2023 - Má configuração de segurança
+      Esta vulnerabilidade poderia ser evitada usando um HttpOnly cookie para armazenar o token. Pois, armazenar
+      o token no window.localStorage, o torna vulnerável a ataques de Cross-Site Scripting (XSS), posssibilitando
+      a um atacante roubar o token de autenticação. O que ocasiona na quebra da segurança da API e da autenticação do usuário.
+      */
+
       // Armazena o token retornado no localStorage (INSEGURO!)
       window.localStorage.setItem(
           import.meta.env.VITE_AUTH_TOKEN_NAME,
